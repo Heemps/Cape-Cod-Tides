@@ -34,7 +34,7 @@ To run this example skill you need to do two things. The first is to deploy the 
 
 ### Alexa Skill Setup
 1. Go to the [Alexa Console](https://developer.amazon.com/edw/home.html) and click Add a New Skill.
-2. Set "Tide Pooler" for the skill name and "tide pooler" as the invocation name, this is what is used to activate your skill. For example you would say: "Alexa, Ask tide pooler when is high tide in Seattle."
+2. Set "Cape Cod Tides" for the skill name and "Cape Cod Tides" as the invocation name, this is what is used to activate your skill. For example you would say: "Alexa, Ask Cape Cod Tides when is high tide in Plymouth."
 3. Select the Lambda ARN for the skill Endpoint and paste the ARN copied from above. Click Next.
 4. Copy the custom slot types from the customSlotTypes folder. Each file in the folder represents a new custom slot type. The name of the file is the name of the custom slot type, and the values in the file are the values for the custom slot.
 5. Copy the Intent Schema from the included IntentSchema.json.
@@ -49,13 +49,13 @@ To run this example skill you need to do two things. The first is to deploy the 
 Example user interactions:
 
 ### One-shot model:
-    User:  "Alexa, ask Tide Pooler when is the high tide in Seattle on Saturday"
-    Alexa: "Saturday June 20th in Seattle the first high tide will be around 7:18 am, and will peak at ..."
+    User:  "Alexa, ask Cape Cod Tides when is the high tide in Plymouth on Saturday"
+    Alexa: "Saturday June 20th in Plymouth the first high tide will be around 7:18 am, and will peak at ..."
 
 ### Dialog model:
-    User:  "Alexa, open Tide Pooler"
-    Alexa: "Welcome to Tide Pooler. Which city would you like tide information for?"
-    User:  "Seattle"
+    User:  "Alexa, open Cape Cod Tides"
+    Alexa: "Welcome to Cape Cod Tides. Which town would you like tide information for?"
+    User:  "Plymouth"
     Alexa: "For which date?"
     User:  "this Saturday"
-    Alexa: "Saturday June 20th in Seattle the first high tide will be around 7:18 am, and will peak at ..."
+    Alexa: "Saturday June 20th in Plymouth the first high tide will be around 7:18 am, and will peak at ..."
