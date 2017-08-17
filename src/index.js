@@ -1,5 +1,6 @@
 /**
-    Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+    Copyright 2017 Brahim Dagher All Rights Reserved.
+    Adapted from https://github.com/KazuCocoa/alexa-tide-pooler
 
     Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
 
@@ -39,7 +40,6 @@
  */
 var APP_ID = 'amzn1.ask.skill.6db0a350-c075-43fd-a92d-b71d0a211fa5'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
-var http = require('http'),
     alexaDateUtil = require('./alexaDateUtil');
 
 /**
@@ -130,10 +130,10 @@ var STATIONS = {
 };
 
 function handleWelcomeRequest(response) {
-    var whichCityPrompt = "Which city would you like tide information for?",
+    var whichCityPrompt = "Which town would you like tide information for?",
         speechOutput = {
-            speech: "<speak>Welcome to Cape Cod Tides my washashore friend. "
-                + "<audio src='https://s3.amazonaws.com/ask-storage/CapeCodTides/OceanWaves.mp3'/>"
+            speech: "<speak>Welcome to Cape Cod Tides my washashore friend,"
+                //+ "<audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
                 + whichCityPrompt
                 + "</speak>",
             type: AlexaSkill.speechOutputType.SSML
@@ -309,11 +309,11 @@ function getFinalTideResponse(cityStation, date, response) {
             speechOutput = "Sorry, the National Oceanic tide service is experiencing a problem. Please try again later";
         } else {
             speechOutput = date.displayDate + " in " + cityStation.city + ", the first high tide will be around "
-                + highTideResponse.firstHighTideTime + ", and will peak at about " + highTideResponse.firstHighTideHeight
+                + highTideResponse.firstHighTideTime  //", and will peak at about " + highTideResponse.firstHighTideHeight
                 + ", followed by a low tide at around " + highTideResponse.lowTideTime
-                + " that will be about " + highTideResponse.lowTideHeight
-                + ". The second high tide will be around " + highTideResponse.secondHighTideTime
-                + ", and will peak at about " + highTideResponse.secondHighTideHeight + ".";
+                //+ " that will be about " + highTideResponse.lowTideHeight
+                + ". The second high tide will be around " + highTideResponse.secondHighTideTime;
+                //+ ", and will peak at about " + highTideResponse.secondHighTideHeight + ".";
         }
 
         response.tellWithCard(speechOutput, "CapeCodTides", speechOutput)
@@ -327,13 +327,14 @@ function getFinalTideResponse(cityStation, date, response) {
 function makeTideRequest(station, date, tideResponseCallback) {
 
     var datum = "MLLW";
-    var endpoint = 'http://tidesandcurrents.noaa.gov/api/datagetter';
+    var endpoint = 'https://tidesandcurrents.noaa.gov/api/datagetter';
     var queryString = '?' + date.requestDateParam;
     queryString += '&station=' + station;
-    queryString += '&product=predictions&datum=' + datum + '&units=english&time_zone=lst_ldt&format=json';
+    queryString += '&product=predictions&application=Alexa.CapeCod.Tides&datum=' + datum + '&units=english&time_zone=lst_ldt&format=json';
 
-    http.get(endpoint + queryString, function (res) {
+    https.get(endpoint + queryString, function (res) {
         var noaaResponseString = '';
+        console.log('FinalQuery: ' + endpoint + queryString);
         console.log('Status Code: ' + res.statusCode);
 
         if (res.statusCode != 200) {
@@ -349,6 +350,7 @@ function makeTideRequest(station, date, tideResponseCallback) {
 
             if (noaaResponseObject.error) {
                 console.log("NOAA error: " + noaaResponseObj.error.message);
+                console.log('FinalQuery: ' + endpoint + queryString);
                 tideResponseCallback(new Error(noaaResponseObj.error.message));
             } else {
                 var highTide = findHighTide(noaaResponseObject);
@@ -465,8 +467,8 @@ function getCityStationFromIntent(intent, assignDefault) {
         } else {
             // For sample skill, default to Seattle.
             return {
-                city: 'seattle',
-                station: STATIONS.seattle
+                city: 'Plymouth',
+                station: STATIONS.plymouth
             }
         }
     } else {
@@ -531,6 +533,6 @@ function getAllStationsText() {
 
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
-    var CapeCodTides = new CapeCodTides();
-    CapeCodTides.execute(event, context);
+    var capeCodTides = new CapeCodTides();
+    capeCodTides.execute(event, context);
 };
