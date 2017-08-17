@@ -40,6 +40,7 @@
  */
 var APP_ID = 'amzn1.ask.skill.6db0a350-c075-43fd-a92d-b71d0a211fa5'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
+var https = require('https'),
     alexaDateUtil = require('./alexaDateUtil');
 
 /**
