@@ -22,16 +22,16 @@
  *
  * Examples:
  * One-shot model:
- *  User:  "Alexa, ask Tide Pooler when is the high tide in Seattle on Saturday"
- *  Alexa: "Saturday June 20th in Seattle the first high tide will be around 7:18 am,
+ *  User:  "Alexa, ask Cape Cod Tides when is the high tide in Barnstable on Saturday"
+ *  Alexa: "Saturday June 20th in Barnstable the first high tide will be around 7:18 am,
  *          and will peak at ...""
  * Dialog model:
  *  User:  "Alexa, open Tide Pooler"
  *  Alexa: "Welcome to Tide Pooler. Which city would you like tide information for?"
- *  User:  "Seattle"
+ *  User:  "Plymouth"
  *  Alexa: "For which date?"
  *  User:  "this Saturday"
- *  Alexa: "Saturday June 20th in Seattle the first high tide will be around 7:18 am,
+ *  Alexa: "Saturday June 20th in Plymouth the first high tide will be around 7:18 am,
  *          and will peak at ...""
  */
 
@@ -39,6 +39,7 @@
  * App ID for the skill
  */
 var APP_ID = 'amzn1.ask.skill.6db0a350-c075-43fd-a92d-b71d0a211fa5'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
+
 
 var https = require('https'),
     alexaDateUtil = require('./alexaDateUtil');
@@ -87,6 +88,7 @@ CapeCodTides.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequ
 CapeCodTides.prototype.intentHandlers = {
     "OneshotTideIntent": function (intent, session, response) {
         handleOneshotTideRequest(intent, session, response);
+        console.log("OneshotTideIntent LAUNCHED - Sent to Handler.");
     },
 
     "DialogTideIntent": function (intent, session, response) {
@@ -146,16 +148,17 @@ var STATIONS = {
 };
 
 function handleWelcomeRequest(response) {
-    var whichCityPrompt = "Which town would you like tide information for?",
+    var whichCityPrompt = "Which town?",
         speechOutput = {
-            speech: "<speak>Welcome to Cape Cod Tides my washashore friend,"
-                //+ "<audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
+            speech: "<speak>"
+                + "Aye Aye!"
+                // + <audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
                 + whichCityPrompt
                 + "</speak>",
             type: AlexaSkill.speechOutputType.SSML
         },
         repromptOutput = {
-            speech: "I can lead you through providing a city and "
+            speech: "I can lead you through providing a town and "
                 + "day of the week to get tide information, "
                 + "or you can simply open Cape Cod Tides and ask a question like, "
                 + "get tide information for Barnstable on Saturday. "
@@ -168,7 +171,7 @@ function handleWelcomeRequest(response) {
 }
 
 function handleHelpRequest(response) {
-    var repromptText = "Which town would you like tide information for?";
+    var repromptText = "Which town?";
     var speechOutput = "I can lead you through providing a town and "
         + "day of the week to get tide information, "
         + "or you can simply open Cape Cod Tides and ask a question like, "
@@ -185,7 +188,7 @@ function handleHelpRequest(response) {
  */
 function handleSupportedCitiesRequest(intent, session, response) {
     // get city re-prompt
-    var repromptText = "Which town would you like tide information for?";
+    var repromptText = "Which town?";
     var speechOutput = "Currently, I know tide information for these coastal towns: " + getAllStationsText()
         + repromptText;
 
@@ -346,7 +349,17 @@ function makeTideRequest(station, date, tideResponseCallback) {
     var endpoint = 'https://tidesandcurrents.noaa.gov/api/datagetter';
     var queryString = '?' + date.requestDateParam;
     queryString += '&station=' + station;
-    queryString += '&product=predictions&application=Alexa.CapeCod.Tides&datum=' + datum + '&units=english&time_zone=lst_ldt&format=json';
+    queryString += '&product=predictions';
+    queryString +='&application=Alexa.CapeCod.Tides';
+    querystring +='&time_zone=lst_ldt';
+    querystring +='&units=english';
+    querystring +='&interval=hilo';
+    querystring +='&format=json';
+    querystring +=''
+
+    // Orig queryString += '&product=predictions&application=Alexa.CapeCod.Tides&datum=' + datum + '&units=english&time_zone=lst_ldt&format=json';
+    //FinalQuery looks like: https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20170924&range=24&station=8444775&product=predictions&application=Alexa.CapeCod.Tides&datum=MLLW&units=english&time_zone=lst_ldt&format=json
+    //Optimal queryString looks like: 'https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.COOPS.TAC.WL&begin_date=20170919&end_date=20170920&datum=MLLW&station=8444775&time_zone=lst_ldt&units=english&interval=hilo&format=json'
 
     https.get(endpoint + queryString, function (res) {
         var noaaResponseString = '';
