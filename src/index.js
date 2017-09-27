@@ -20,6 +20,7 @@
  *   examples section for sample interactions of these models.
  * - Pre-recorded audio: Uses the SSML 'audio' tag to include an ocean wave sound in the welcome response.
  *
+ *
  * Examples:
  * One-shot model:
  *  User:  "Alexa, ask Cape Cod Tides when is the high tide in Barnstable on Saturday"
@@ -39,7 +40,7 @@
  * App ID for the skill
  */
 var APP_ID = 'amzn1.ask.skill.6db0a350-c075-43fd-a92d-b71d0a211fa5'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
-
+// OK needed to add some new comments
 
 var https = require('https'),
     alexaDateUtil = require('./alexaDateUtil');
