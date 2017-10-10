@@ -152,6 +152,7 @@ function handleWelcomeRequest(response) {
         speechOutput = {
             speech: "<speak>"
                 + "Aye Aye!"
+                + "Aye Aye Craptin!"
                 // + <audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
                 // + <audio src='https://s3.amazonaws.com/alexa-capecodtides/capecodsounds.mp3'/>
                 + whichCityPrompt
