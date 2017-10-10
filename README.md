@@ -11,7 +11,7 @@ This sample shows how to create a Lambda function for handling Alexa Skill reque
 - Dialog and Session state: Handles two models, both a one-shot ask and tell model, and a multi-turn dialog model.
   If the user provides an incorrect slot in a one-shot model, it will direct to the dialog model. See the
   examples section for sample interactions of these models.
-- Pre-recorded audio: Uses the SSML 'audio' tag to include an ocean wave sound in the welcome response.
+
 
 ## Setup
 To run this example skill you need to do two things. The first is to deploy the example code in lambda, and the second is to configure the Alexa skill to use Lambda.
