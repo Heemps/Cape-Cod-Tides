@@ -150,14 +150,13 @@ var STATIONS = {
 function handleWelcomeRequest(response) {
     var whichCityPrompt = "Which town?",
         speechOutput = {
-            speech: "<speak>"
-                + "Aye Aye!"
+              speech: "<speak>"
                 + "Aye Aye Craptin!"
                 // + <audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
                 // + <audio src='https://s3.amazonaws.com/alexa-capecodtides/capecodsounds.mp3'/>
                 + whichCityPrompt
                 + "</speak>",
-            type: AlexaSkill.speechOutputType.SSML
+              type: AlexaSkill.speechOutputType.SSML
         },
         repromptOutput = {
             speech: "I can lead you through providing a town and "
