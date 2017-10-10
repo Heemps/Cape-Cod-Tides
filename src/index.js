@@ -153,6 +153,7 @@ function handleWelcomeRequest(response) {
             speech: "<speak>"
                 + "Aye Aye!"
                 // + <audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
+                // + <audio src='https://s3.amazonaws.com/alexa-capecodtides/capecodsounds.mp3'/>
                 + whichCityPrompt
                 + "</speak>",
             type: AlexaSkill.speechOutputType.SSML
