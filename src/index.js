@@ -1,4 +1,4 @@
-/**
+ /**
     Copyright 2017 Brahim Dagher All Rights Reserved.
     Adapted from https://github.com/KazuCocoa/alexa-tide-pooler
 
@@ -189,7 +189,7 @@ function handleHelpRequest(response) {
 function handleSupportedCitiesRequest(intent, session, response) {
     // get city re-prompt
     var repromptText = "Which town?";
-    var speechOutput = "Currently, I know tide information for these coastal towns: " + getAllStationsText()
+    var speechOutput = "Currently, I know tide information for these towns: " + getAllStationsText()
         + repromptText;
 
     response.ask(speechOutput, repromptText);
@@ -343,23 +343,33 @@ function getFinalTideResponse(cityStation, date, response) {
  * Uses NOAA.gov API, documented: http://tidesandcurrents.noaa.gov/api/
  * Results can be verified at: http://tidesandcurrents.noaa.gov/noaatidepredictions/NOAATidesFacade.jsp?Stationid=[id]
  */
-function makeTideRequest(station, date, tideResponseCallback) {
 
+function makeTideRequest(station, date, tideResponseCallback) {
+    //Orig Code
     var datum = "MLLW";
     var endpoint = 'https://tidesandcurrents.noaa.gov/api/datagetter';
     var queryString = '?' + date.requestDateParam;
     queryString += '&station=' + station;
-    queryString += '&product=predictions';
-    queryString +='&application=Alexa.CapeCod.Tides';
-    querystring +='&time_zone=lst_ldt';
-    querystring +='&units=english';
-    querystring +='&interval=hilo';
-    querystring +='&format=json';
-    querystring +=''
+    queryString += '&product=predictions&datum=' + datum + '&application=Alexa.CapeCod.Tides&units=english&time_zone=lst_ldt&format=json';
 
-    // Orig queryString += '&product=predictions&application=Alexa.CapeCod.Tides&datum=' + datum + '&units=english&time_zone=lst_ldt&format=json';
-    //FinalQuery looks like: https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20170924&range=24&station=8444775&product=predictions&application=Alexa.CapeCod.Tides&datum=MLLW&units=english&time_zone=lst_ldt&format=json
-    //Optimal queryString looks like: 'https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.COOPS.TAC.WL&begin_date=20170919&end_date=20170920&datum=MLLW&station=8444775&time_zone=lst_ldt&units=english&interval=hilo&format=json'
+    //Orig queryString FAILED result Hingham:   https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20170923&range=24&station=8444775&product=predictions&datum=MLLW&units=english&time_zone=lst_ldt&format=json
+    //Orig queryString SUCCESS result Plymouth: https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20170923&range=24&station=8446493&product=predictions&datum=MLLW&units=english&time_zone=lst_ldt&format=json
+    //Below modified by BD
+
+    //var endpoint = 'https://tidesandcurrents.noaa.gov/api/datagetter';
+    //var queryString = '?' + date.requestDateParam;
+    // queryString += '&station=' + station;
+    // queryString += '&product=predictions';
+    // queryString += '&application=Alexa.CapeCod.Tides';
+    // queryString += '&datum=MLLW'
+    // queryString += '&time_zone=lst_ldt';
+    // queryString += '&units=english';
+    // queryString += '&interval=hilo';
+    // queryString += '&format=json';
+
+
+    // FinalQuery looks like: https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20170924&range=24&station=8444775&product=predictions&application=Alexa.CapeCod.Tides&datum=MLLW&units=english&time_zone=lst_ldt&format=json
+    // Optimal queryString looks like: https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.COOPS.TAC.WL&begin_date=20170919&end_date=20170920&datum=MLLW&station=8444775&time_zone=lst_ldt&units=english&interval=hilo&format=json
 
     https.get(endpoint + queryString, function (res) {
         var noaaResponseString = '';
