@@ -20,7 +20,6 @@
  *   examples section for sample interactions of these models.
  * - Pre-recorded audio: Uses the SSML 'audio' tag to include an ocean wave sound in the welcome response.
  *
- *
  * Examples:
  * One-shot model:
  *  User:  "Alexa, ask Cape Cod Tides when is the high tide in Barnstable on Saturday"
@@ -40,7 +39,7 @@
  * App ID for the skill
  */
 var APP_ID = 'amzn1.ask.skill.6db0a350-c075-43fd-a92d-b71d0a211fa5'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
-// OK needed to add some new comments
+
 
 var https = require('https'),
     alexaDateUtil = require('./alexaDateUtil');
@@ -143,7 +142,7 @@ var STATIONS = {
     'woods hole':8447939,
     'marion':8447385,
     'new bedford':8447584,
-    'westport':8447975,
+    'westport':8447975, 
     'duxbury':8446166,
     'hingham':8444775
 };
@@ -152,7 +151,7 @@ function handleWelcomeRequest(response) {
     var whichCityPrompt = "Which town?",
         speechOutput = {
               speech: "<speak>"
-                + "Aye Aye Craptin!"
+                + "Aye Aye Captain!"
                 // + <audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
                 // + <audio src='https://s3.amazonaws.com/alexa-capecodtides/capecodsounds.mp3'/>
                 + whichCityPrompt
@@ -178,7 +177,7 @@ function handleHelpRequest(response) {
         + "day of the week to get tide information, "
         + "or you can simply open Cape Cod Tides and ask a question like, "
         + "get tide information for Barnstable on Saturday. "
-        + "For a list of supported towns, ask what what are supported. "
+        + "For a list of supported towns, ask which towns are supported. "
         + "Or you can say exit. "
         + repromptText;
 
