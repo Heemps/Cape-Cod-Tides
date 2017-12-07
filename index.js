@@ -127,22 +127,23 @@ CapeCodTides.prototype.intentHandlers = {
 // -------------------------- CapeCodTides Domain Specific Business Logic --------------------------
 
 // example city to NOAA station mapping. Can be found on: http://tidesandcurrents.noaa.gov/map/
+// comment items are not working - BD
 var STATIONS = {
     'plymouth':8446493,
-    'barnstable':8447335,
+    //'barnstable':8447335,
     'sesuit harbor':8447241,
-    'wellfleet':8446613,
+    //'wellfleet':8446613,
     'provincetown':8446121,
     'chatham stage harbor':8447505,
-    'harwichport wychmere harbor':8447506,
-    'south yarmouth bass river':8447504,
-    'dennisport':8447525,
+    //'harwichport wychmere harbor':8447506,
+    //'south yarmouth bass river':8447504,
+    //'dennisport':8447525,
     'hyannisport':8447605,
-    'falmouth':8447865,
-    'woods hole':8447939,
-    'marion':8447385,
-    'new bedford':8447584,
-    'westport':8447975, 
+    //'falmouth':8447865,
+    //'woods hole':8447939,
+    //'marion':8447385,
+    //'new bedford':8447584,
+    //'westport':8447975, 
     'duxbury':8446166,
     'hingham':8444775
 };
@@ -151,7 +152,7 @@ function handleWelcomeRequest(response) {
     var whichCityPrompt = "Which town?",
         speechOutput = {
               speech: "<speak>"
-                + "Aye Aye Captain Crunchers!"
+                + "Aye Aye Captain!"
                 // + <audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
                 // + <audio src='https://s3.amazonaws.com/alexa-capecodtides/capecodsounds.mp3'/>
                 + whichCityPrompt
