@@ -151,7 +151,7 @@ function handleWelcomeRequest(response) {
     var whichCityPrompt = "Which town?",
         speechOutput = {
               speech: "<speak>"
-                + "Aye Aye Captain!"
+                + "Aye Aye Captain Crunch!"
                 // + <audio src='https://s3.amazonaws.com/ask-storage/TidePooler/OceanWaves.mp3'/>"
                 // + <audio src='https://s3.amazonaws.com/alexa-capecodtides/capecodsounds.mp3'/>
                 + whichCityPrompt
