@@ -88,7 +88,7 @@ CapeCodTides.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequ
 CapeCodTides.prototype.intentHandlers = {
     "OneshotTideIntent": function (intent, session, response) {
         handleOneshotTideRequest(intent, session, response);
-        console.log("OneshotTideIntent LAUNCHED - Sent to Handler.");
+        //console.log("OneshotTideIntent LAUNCHED - Sent to Handler.");
     },
 
     "DialogTideIntent": function (intent, session, response) {
@@ -390,8 +390,8 @@ function makeTideRequest(station, date, tideResponseCallback) {
             var noaaResponseObject = JSON.parse(noaaResponseString);
 
             if (noaaResponseObject.error) {
-                console.log("NOAA error: " + noaaResponseObj.error.message);
-                console.log('FinalQuery: ' + endpoint + queryString);
+               // console.log("NOAA error: " + noaaResponseObj.error.message);
+               // console.log('FinalQuery: ' + endpoint + queryString);
                 tideResponseCallback(new Error(noaaResponseObj.error.message));
             } else {
                 var highTide = findHighTide(noaaResponseObject);
